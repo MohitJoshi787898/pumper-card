@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bundle & Save</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #333;
+        line-height: 1.5;
+        background-color: #f9f9f9;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 500px;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: #ff6b82;
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-family: Inter;
+
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24.2px;
+
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+      }
+      .unit {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 16.94px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+      }
+
+      .option {
+        border: 1px solid #ddd;
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+        /* border-radius: 8px; */
+        margin-bottom: 15px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      select option:checked {
+        background-color: #ff6b82 !important;
+        color: white;
+      }
+      select option:hover {
+        background-color: #ff6b82;
+        color: white;
+      }
+      option:hover {
+        background-color: #f0f0f0 !important; /* Light gray on hover */
+        color: black;
+      }
+      select:focus {
+        border-color: #ff6b82; /* Highlight border on focus */
+        outline: none;
+      }
+      .discount {
+        font-size: 12px !important;
+        font-weight: 400;
+        padding: 2px 3px;
+        line-height: 14.52px;
+        text-align: center;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        background-color: #ff6b82;
+        color: #ffffff;
+      }
+      .price {
+        font-size: 14.46px;
+        font-weight: 500;
+        line-height: 17.5px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: #000000;
+      }
+      .standard-price {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 14.52px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        opacity: 0.5;
+      }
+      .discount-price {
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 12.1px;
+        text-align: left;
+        text-decoration-line: line-through;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        opacity: 0.5;
+      }
+
+      .option.selected {
+        border: 2px solid #ff6b82;
+        background-color: #ff9ead0f;
+
+        max-height: 1000px;
+      }
+      .option-inner {
+        width: 100%;
+
+        top: 82px;
+        left: 59px;
+        gap: 0px;
+        border: 0.9px 0px 0px 0px solid #c8c8c8;
+        opacity: 0px;
+      }
+
+      .option-header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        /* margin-bottom: 10px; */
+      }
+
+      .option-header span {
+        font-size: 16px;
+      }
+
+      .most-popular {
+        background: #ff4081;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .size-color-selectors {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 10px;
+        max-width: 60%;
+      }
+
+      .size-color-selectors.none {
+        display: none;
+      }
+
+      label {
+        margin-bottom: 5px;
+
+        font-size: 9.94px;
+        font-weight: 400;
+        line-height: 12.03px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+      }
+
+      select {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .footer p {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.94px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+      }
+
+      .footer strong {
+        font-size: 18px;
+        color: #333;
+      }
+
+      .add-to-cart {
+        display: flex;
+        justify-content: center; /* Horizontally center text */
+        align-items: center; /* Vertically center text */
+        background: #ff6b82;
+        color: #fff;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        transition: background 0.3s;
+        width: 100%;
+        height: 50px; /* Optional, ensure button height is consistent */
+        text-align: center;
+      }
+
+      .add-to-cart:hover {
+        background: #e6356f;
+      }
+      .option {
+        display: flex;
+        flex: 1;
+        gap: 15px;
+        position: relative;
+      }
+
+      .option input[type="radio"] {
+        top: 15px;
+        left: 15px;
+        transform: scale(1.5);
+        cursor: pointer;
+      }
+
+      .option.selected input[type="radio"] {
+        /* accent-color: #ff6b82; */
+        /* background-color: #ff6b82; */
+      }
+
+      #changeColor {
+        accent-color: rgb(250, 82, 82);
+      }
+      .summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .free-delivery {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 16.94px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: #ff6b82 !important;
+      }
+
+      @media (max-width: 480px) {
+        h2 {
+          font-size: 20px;
+        }
+
+        .option-header span {
+          font-size: 14px;
+        }
+
+        .add-to-cart {
+          font-size: 14px;
+          padding: 8px 15px;
+        }
+      }
+
+      .dashedLine {
+        position: absolute;
+        left: 0;
+        bottom: 62%;
+        width: 100%;
+        border-bottom: 1px solid #c8c8c8;
+      }
+
+      .inputRadio {
+        /* position: absolute; */
+        margin-top: 15px;
+      }
+
+      .mostPopular {
+        position: absolute;
+        right: 10px;
+        top: -9px;
+        z-index: 99999;
+        font-size: 11px;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .mostPopular span {
+        background-color: #ff6b82;
+        padding: 3px 7px;
+        color: white;
+        font-weight: 600;
+        border-radius: 4px;
+      }
+
+      .mostPopular .one {
+        height: 9px;
+        width: 9px;
+        background-color: #e6356f;
+        clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
+        position: absolute;
+        left: -6px;
+        z-index: -2;
+        top: 0;
+      }
+      .mostPopular .two {
+        height: 9px;
+        width: 9px;
+        background-color: #e6356f;
+        clip-path: polygon(0 0, 0% 100%, 100% 100%);
+        position: absolute;
+        right: -6px;
+        z-index: -2;
+        top: 0;
+      }
+      .footer p span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 16.94px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: #000000;
+      }
+      .powered {
+        font-size: 12px !important;
+        font-style: italic;
+        font-weight: 400;
+        line-height: 14.52px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        margin-top: 8px;
+        text-align: end !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div
+        class=""
+        style="position: relative; text-align: center; padding-bottom: 12px"
+      >
+        <span
+          style="
+            font-size: 20px;
+            font-weight: 600;
+            color: #ff6b82;
+
+            position: relative;
+            background-color: white;
+            padding: 0px 8px;
+            z-index: 9999;
+          "
+          >YAY! It’s BOGO</span
+        >
+        <div class="dashedLine"></div>
+      </div>
+
+      <div class="option optionContent" data-option="1">
+        <input
+          type="radio"
+          class="inputRadio"
+          name="bundle-option"
+          id="changeColor"
+        />
+        <div class="option-inner">
+          <div class="option-header">
+            <div>
+              <span class="unit">1 Unit</span>
+              <span class="discount">10% off</span>
+              <p class="standard-price">Standard Price</p>
+            </div>
+            <div>
+              <p class="price">$10.00 USD</p>
+              <p class="discount-price">$24.00 USD</p>
+            </div>
+          </div>
+          <div class="size-color-selectors none"></div>
+        </div>
+      </div>
+
+      <div class="option" style="position: relative" data-option="2">
+        <div class="mostPopular">
+          <span>Most Popular</span>
+          <div class="one"></div>
+          <div class="two"></div>
+        </div>
+        <input
+          type="radio"
+          class="inputRadio"
+          name="bundle-option"
+          id="changeColor"
+        />
+        <div class="option-inner">
+          <div class="option-header">
+            <div>
+              <span class="unit">2 Unit</span>
+              <span class="discount">18% off</span>
+              <p class="standard-price">Standard Price</p>
+            </div>
+            <div>
+              <p class="price">$10.00 USD</p>
+              <p class="discount-price">$24.00 USD</p>
+            </div>
+          </div>
+          <div class="size-color-selectors none"></div>
+        </div>
+      </div>
+
+      <div class="option" data-option="3">
+        <input
+          type="radio"
+          class="inputRadio"
+          name="bundle-option"
+          id="changeColor"
+        />
+        <div class="option-inner">
+          <div class="option-header">
+            <div>
+              <span class="unit">3 Unit</span>
+              <span class="discount">20% off</span>
+              <p class="standard-price">Standard Price</p>
+            </div>
+            <div>
+              <p class="price">$24.00 USD</p>
+              <p class="discount-price">$24.00 USD</p>
+            </div>
+          </div>
+          <div class="size-color-selectors none"></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="summary">
+          <p class="free-delivery">Free Delivery</p>
+          <p>Total :<span> $18.00 USD </span></p>
+        </div>
+        <a href="#" class="add-to-cart">+ Add to Cart</a>
+        <p class="powered">@ Powered by Pumper</p>
+      </div>
+    </div>
+
+    <script>
+      const sizeOptions = ["S", "M", "L"];
+      const colorOptions = ["Red", "Blue", "Green"];
+      const options = document.querySelectorAll(".option");
+
+      options.forEach((option) => {
+        const selectorsContainer = option.querySelector(
+          ".size-color-selectors"
+        );
+        const optionCount = option.getAttribute("data-option");
+
+        for (let i = 1; i <= optionCount; i++) {
+          const sizeDiv = document.createElement("div");
+          const colorDiv = document.createElement("div");
+
+          sizeDiv.innerHTML = `
+          <label>${i} Size</label>
+          <select>
+            ${sizeOptions.map((size) => `<option>${size}</option>`).join("")}
+          </select>
+        `;
+
+          colorDiv.innerHTML = `
+          <label>${i} Color</label>
+          <select>
+            ${colorOptions.map((color) => `<option>${color}</option>`).join("")}
+          </select>
+        `;
+
+          selectorsContainer.appendChild(sizeDiv);
+          selectorsContainer.appendChild(colorDiv);
+        }
+
+        option.addEventListener("click", () => {
+          options.forEach((o) => {
+            o.classList.remove("selected");
+            o.querySelector(".size-color-selectors").classList.add("none");
+          });
+
+          option.classList.add("selected");
+          selectorsContainer.classList.remove("none");
+          option.querySelector('input[type="radio"]').checked = true;
+        });
+      });
+    </script>
+  </body>
+</html>
